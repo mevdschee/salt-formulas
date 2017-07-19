@@ -19,4 +19,4 @@ mariadb_service:
 mysql_secure_installation:
   cmd.run:
     - name: echo -e "\ny\n{{ password }}\n{{ password }}\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation
-    - onlyif: echo "select password=='' from user where user='root';" | mysql mysql | grep 1
+    - onlyif: echo "select password='' from user where user='root';" | mysql mysql | grep 1
