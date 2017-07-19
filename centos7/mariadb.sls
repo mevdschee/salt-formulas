@@ -19,3 +19,4 @@ mariadb_service:
 mysql_secure_installation:
   cmd.run:
     - name: echo -e "\ny\n{{ password }}\n{{ password }}\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation
+    - unless: 'mysql mysql --batch -e "select * from user\G" 2>&1 | grep -q "ERROR 1045 (28000)"'
