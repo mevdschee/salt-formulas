@@ -18,5 +18,5 @@ postgresql_service:
 
 set_postgres_password:
   cmd.run:
-    - name: echo "ALTER USER postgres WITH PASSWORD '{{ password }}';" | su postgres -c psql
+    - name: echo "ALTER USER postgres WITH PASSWORD '{{ password }}';" | su - postgres -c psql
     - unless: echo "\du" | PGPASSWORD={{ password }} psql -Upostgres -h127.0.0.1 | grep postgres
