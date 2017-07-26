@@ -20,3 +20,8 @@ pgsql-data-dir:
     - encoding: UTF8
     - locale: C
     - runas: postgres
+
+postgresql_service:
+  service.running:
+    - name: postgresql
+    - enable: True
