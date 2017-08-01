@@ -25,3 +25,10 @@ postgresql_service:
   service.running:
     - name: postgresql
     - enable: True
+
+postgresql-public-zone:
+  firewalld.present:
+    - name: public
+    - services:
+      - postgres
+    - prune_services: False
