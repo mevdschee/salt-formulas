@@ -7,3 +7,9 @@ ntp-conf:
   cmd.run:
     - name: sed -i "s/ubuntu.pool.ntp.org/{{ server_pool }}/g" /etc/ntp.conf
     - onlyif: grep "ubuntu.pool.ntp.org" /etc/ntp.conf > /dev/null
+
+ntp_service:
+  service.running:
+    - name: ntp
+    - enable: True
+
