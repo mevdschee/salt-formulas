@@ -21,3 +21,9 @@ mysql_secure_installation:
     - name: echo -e "\ny\n{{ password }}\n{{ password }}\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation
     - onlyif: echo "select password='' from user where user='root';" | mysql mysql | grep 1
 
+mysql-public-zone:
+  firewalld.present:
+    - name: public
+    - services:
+      - mysql
+    - prune_services: False
