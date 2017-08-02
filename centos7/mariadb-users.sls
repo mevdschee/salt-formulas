@@ -11,8 +11,9 @@
 {% set host = salt['pillar.get']('mariadb:host', 'localhost') %}
 {% set charset = salt['pillar.get']('mariadb:charset', 'utf8mb4') %}
 
-MySQL-python:
-  pkg.installed
+mariadb-users-package:
+  pkg.installed:
+    - name: MySQL-python
 
 {% for username, password in salt['pillar.get']('mariadb:users', {}).items() %}
 

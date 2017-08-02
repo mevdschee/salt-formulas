@@ -5,18 +5,18 @@
 
 {% set password = salt['pillar.get']('mariadb:root_password', '') %}
 
-mariadb:
+mariadb-package:
   pkg.installed:
     - pkgs:
       - mariadb-server
       - mariadb-client
 
-mariadb_service:
+mariadb-service:
   service.running:
     - name: mysql
     - enable: True
 
-mysql_secure_installation:
+mariadb-security:
   cmd.run:
     - name: echo -e "\ny\n{{ password }}\n{{ password }}\ny\ny\ny\ny" | /usr/bin/mysql_secure_installation
     - onlyif: echo "select password='' from user where user='root';" | mysql mysql | grep 1
