@@ -8,27 +8,15 @@
 postgresql-package:
   pkg.installed:
     - pkgs:
-      - postgresql-server
       - postgresql
-
-postgresql-initdb:
-  postgres_initdb.present:
-    - name: /var/lib/pgsql/data
-    - auth: md5
-    - user: postgres
-    - password: {{ password }}
-    - encoding: UTF8
-    - locale: C
-    - runas: postgres
+      - postgresql-client
 
 postgresql-service:
   service.running:
     - name: postgresql
     - enable: True
 
-postgresql-firewalld:
-  firewalld.present:
-    - name: public
-    - services:
-      - postgres
-    - prune_services: False
+postgresql-set-password:
+  cmd.run:
+    - name: echo "ALTER USER postgres WITH PASSWORD '{{ password }}';" | su - postgres -c psql
+    - unless: echo "\du" | PGPASSWORD={{ password }} psql -Upostgres -h127.0.0.1 | grep postgres
