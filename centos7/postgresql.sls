@@ -1,9 +1,13 @@
 # Example pillar
 #
 #postgresql:
-#    postgres_password: some_secure_password_change_me
+#  postgres_password: some_secure_password_change_me
+#  encoding: UTF8
+#  locale: en_US.UTF-8
 
 {% set password = salt['pillar.get']('postgresql:postgres_password', '') %}
+{% set encoding = salt['pillar.get']('postgresql:encoding', 'UTF8') %}
+{% set locale = salt['pillar.get']('postgresql:locale', 'en_US.UTF8') %}
 
 postgresql-package:
   pkg.installed:
@@ -17,8 +21,8 @@ postgresql-initdb:
     - auth: md5
     - user: postgres
     - password: {{ password }}
-    - encoding: UTF8
-    - locale: C
+    - encoding: {{ encoding }}
+    - locale: {{ locale }}
     - runas: postgres
 
 postgresql-service:

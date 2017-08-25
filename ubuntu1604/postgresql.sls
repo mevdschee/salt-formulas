@@ -1,7 +1,7 @@
 # Example pillar
 #
 #postgresql:
-#    postgres_password: some_secure_password_change_me
+#  postgres_password: some_secure_password_change_me
 
 {% set password = salt['pillar.get']('postgresql:postgres_password', '') %}
 
