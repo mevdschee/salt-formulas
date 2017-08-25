@@ -5,13 +5,13 @@
 
 {% set password = salt['pillar.get']('postgresql:postgres_password', '') %}
 
-postgresql:
+postgresql-package:
   pkg.installed:
     - pkgs:
       - postgresql-server
       - postgresql
 
-pgsql-data-dir:
+postgresql-initdb:
   postgres_initdb.present:
     - name: /var/lib/pgsql/data
     - auth: md5
@@ -21,12 +21,12 @@ pgsql-data-dir:
     - locale: C
     - runas: postgres
 
-postgresql_service:
+postgresql-service:
   service.running:
     - name: postgresql
     - enable: True
 
-postgresql-public-zone:
+postgresql-firewalld:
   firewalld.present:
     - name: public
     - services:
