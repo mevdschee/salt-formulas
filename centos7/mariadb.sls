@@ -44,7 +44,6 @@ mariadb-conf:
   ini.options_present:
     - name: '/etc/my.cnf'
     - separator: '='
-    - strict: True
     - sections:
         mysqld:
           innodb_buffer_pool_size: {{ innodb_buffer_pool_size }}
