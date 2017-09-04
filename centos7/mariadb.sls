@@ -51,3 +51,22 @@ mariadb-conf:
           innodb_thread_concurrency: {{ innodb_thread_concurrency }}
           innodb_flush_log_at_trx_commit: {{ innodb_flush_log_at_trx_commit }}
           max_allowed_packet: {{ max_allowed_packet }}
+
+mariadb-systemd-directory:
+  file.directory:
+    - name: /etc/systemd/system/mariadb.service.d
+    - user: root
+    - group: root
+    - mode: 755
+    - makedirs: True
+
+
+mariadb-systemd-config:
+  file.managed:
+    - name: /etc/systemd/system/mariadb.service.d/limits.conf
+    - user: root
+    - group: root
+    - mode: 644
+    - contents: |
+        [Service]
+        LimitNOFILE=10000
