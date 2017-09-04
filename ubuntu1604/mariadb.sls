@@ -16,6 +16,7 @@
 {% set innodb_thread_concurrency = salt['pillar.get']('mariadb:innodb_thread_concurrency', default_innodb_thread_concurrency) %}
 {% set innodb_flush_log_at_trx_commit = salt['pillar.get']('mariadb:innodb_flush_log_at_trx_commit', 0) %}
 {% set max_allowed_packet = salt['pillar.get']('mariadb:max_allowed_packet', '16M') %}
+{% set open_files_limit = salt['pillar.get']('mariadb:open_files_limit', '10000') %}
 
 mariadb-package:
   pkg.installed:
@@ -44,23 +45,4 @@ mariadb-conf:
           innodb_thread_concurrency: {{ innodb_thread_concurrency }}
           innodb_flush_log_at_trx_commit: {{ innodb_flush_log_at_trx_commit }}
           max_allowed_packet: {{ max_allowed_packet }}
-
-mariadb-systemd-directory:
-  file.directory:
-    - name: /etc/systemd/system/mysql.service.d
-    - user: root
-    - group: root
-    - mode: 755
-    - makedirs: True
-
-
-mariadb-systemd-config:
-  file.managed:
-    - name: /etc/systemd/system/mysql.service.d/limits.conf
-    - user: root
-    - group: root
-    - mode: 644
-    - contents: |
-        [Service]
-        LimitNOFILE=10000
-
+          open_files_limit: {{ open_files_limit }}
