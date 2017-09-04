@@ -45,13 +45,6 @@ postgresql-set-password:
     - name: echo "ALTER USER postgres WITH PASSWORD '{{ password }}';" | su - postgres -c psql
     - unless: echo "\du" | PGPASSWORD={{ password }} psql -Upostgres -h127.0.0.1 | grep postgres
 
-postgresql-firewalld:
-  firewalld.present:
-    - name: public
-    - services:
-      - postgresql
-    - prune_services: False
-
 postgresql-conf:
   ini.options_present:
     - name: '/var/lib/pgsql/data/postgresql.conf'
