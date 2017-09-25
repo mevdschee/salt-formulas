@@ -6,7 +6,7 @@
 {% set password = salt['pillar.get']('mariadb:root_password', '') %}
 
 # set default_innodb_buffer_pool_size to 70% of the RAM
-{% set default_innodb_buffer_pool_size   = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | tail -n +2 | tail -n 1 | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 7 \/ 10') ~ 'M' %}
+{% set default_innodb_buffer_pool_size   = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | grep Mem: | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 7 \/ 10') ~ 'M' %}
 
 # set default_innodb_thread_concurrency to twice the core count
 {% set default_innodb_thread_concurrency = salt['cmd.run']('expr ' ~ salt['cmd.shell']('cat /proc/cpuinfo | grep processor | wc -l') ~ ' \* 2') %}

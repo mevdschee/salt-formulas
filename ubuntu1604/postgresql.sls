@@ -10,16 +10,16 @@
 {% set locale = salt['pillar.get']('postgresql:locale', 'en_US.UTF8') %}
 
 # set default_shared_buffers to 30% of the RAM
-{% set default_shared_buffers = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | tail -n +2 | tail -n 1 | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 3 \/ 10') ~ 'MB' %}
+{% set default_shared_buffers = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | grep Mem: | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 3 \/ 10') ~ 'MB' %}
 
 # set default_effective_cache_size to 50% of the RAM
-{% set default_effective_cache_size = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | tail -n +2 | tail -n 1 | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 5 \/ 10') ~ 'MB' %}
+{% set default_effective_cache_size = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | grep Mem: | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 5 \/ 10') ~ 'MB' %}
 
 # set default_work_mem to 0.2% of the RAM (20% RAM for 100 connections))
-{% set default_work_mem = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | tail -n +2 | tail -n 1 | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 2 \/ 1000') ~ 'MB' %}
+{% set default_work_mem = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | grep Mem: | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 2 \/ 1000') ~ 'MB' %}
 
 # set default_maintenance_work_mem to 2% of the RAM (10 x work_mem)
-{% set default_maintenance_work_mem = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | tail -n +2 | tail -n 1 | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 2 \/ 100') ~ 'MB' %}
+{% set default_maintenance_work_mem = salt['cmd.run']('expr ' ~ salt['cmd.shell']('free -m | grep Mem: | sed -re "s/\s+/,/g" | cut -d, -f2') ~ ' \* 2 \/ 100') ~ 'MB' %}
 
 {% set shared_buffers = salt['pillar.get']('postgresql:shared_buffers', default_shared_buffers) %}
 {% set effective_cache_size = salt['pillar.get']('postgresql:effective_cache_size', default_effective_cache_size) %}
