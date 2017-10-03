@@ -14,7 +14,8 @@
 {% set innodb_buffer_pool_size = salt['pillar.get']('mariadb:innodb_buffer_pool_size', default_innodb_buffer_pool_size) %}
 {% set innodb_log_file_size = salt['pillar.get']('mariadb:innodb_log_file_size', '256M') %}
 {% set innodb_thread_concurrency = salt['pillar.get']('mariadb:innodb_thread_concurrency', default_innodb_thread_concurrency) %}
-{% set innodb_flush_log_at_trx_commit = salt['pillar.get']('mariadb:innodb_flush_log_at_trx_commit', 0) %}
+# set innodb_flush_log_at_trx_commit to '0' for higher performance
+{% set innodb_flush_log_at_trx_commit = salt['pillar.get']('mariadb:innodb_flush_log_at_trx_commit', 1) %}
 {% set max_allowed_packet = salt['pillar.get']('mariadb:max_allowed_packet', '16M') %}
 {% set open_files_limit = salt['pillar.get']('mariadb:open_files_limit', '10000') %}
 
