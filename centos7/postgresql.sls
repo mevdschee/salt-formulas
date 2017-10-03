@@ -27,7 +27,7 @@
 {% set default_statistics_target = salt['pillar.get']('postgresql:default_statistics_target', '250') %}
 {% set work_mem = salt['pillar.get']('postgresql:work_mem', default_work_mem) %}
 {% set maintenance_work_mem = salt['pillar.get']('postgresql:maintenance_work_mem', default_maintenance_work_mem) %}
-# set to 'off' for higher performance
+# set synchronous_commit to 'off' for higher performance
 {% set synchronous_commit = salt['pillar.get']('postgresql:synchronous_commit', 'on') %}
 
 postgresql-package:
